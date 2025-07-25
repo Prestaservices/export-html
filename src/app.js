@@ -26,7 +26,16 @@ const app = new Koa();
 app
   .use(errorHandler)
   .use(logger.middleware())
-  .use(bodyParser({ multipart: true }));
+  .use(bodyParser({
+    multipart: true,
+    urlencoded: true,
+    formLimit: '1gb',
+    jsonLimit: '1gb',
+    textLimit: '1gb',
+    formidable: {
+      maxFileSize: Number.MAX_SAFE_INTEGER // ~9 petabytes
+    }
+  }));
 
 const router = new Router();
 app.router = router;
